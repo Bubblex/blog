@@ -1,13 +1,13 @@
 .default-body {
-    background: #f0f0f0;
+    background: #d4d4d4;
 }
 
 .main-container {
     width: 1000px;
     margin-left: auto;
     margin-right: auto;
-    border: 1px solid #4d4d4d;
-    background-color: #d4d4d4;
+    border: 1px solid #666;
+    background-color: #f0f0f0;
     border-radius: 3px;
     padding: 20px;
 }
