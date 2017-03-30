@@ -1,9 +1,9 @@
 ---
 layout: default
-title: 江肖
+title: 江肖的笔记
 ---
 <h2>{{ page.title }}</h2>
-<p>最新文章</p>
+<p>最新笔记</p>
 <ul>
 　　{% for post in site.posts %}
 　　　　<li>{{ post.date | date_to_string }} <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></li>
