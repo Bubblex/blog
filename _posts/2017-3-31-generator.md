@@ -25,16 +25,16 @@ var hw = helloWorldGenerator();
 
 ```js
 hw.next()
-// { value: 'hello', done: false}
+// { value: 'hello', done: false }
 
 hw.next()
-// { value: 'world', done: false}
+// { value: 'world', done: false }
 
 hw.next()
-// { value: 'ending', done: ture}
+// { value: 'ending', done: ture }
 
 hw.next()
-// { value: undefined, done: ture}
+// { value: undefined, done: ture }
 ```
 
 总结一下，调用Generator函数，返回一个遍历器对象,代表Generator函数的内部指针。以后，每次调用遍历器对象的next方法，就会返回一个有着value和done两个属性的对象。**value** 属性表示当前的内部状态的值，是yield语句后面那个表达式的值；**done** 属性值是一个布尔值，表示遍历是否结束。
