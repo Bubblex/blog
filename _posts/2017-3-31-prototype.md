@@ -4,6 +4,20 @@ title: 原型
 ---
 
 # 原型
+
+<!-- toc orderedList:0 depthFrom:1 depthTo:6 -->
+
+* [原型](#原型)
+    * [[[Prototype]]](#prototype)
+        * [Object.prototype](#objectprototype)
+        * [属性设置和屏蔽](#属性设置和屏蔽)
+    * ["类"](#类)
+        * ["类"函数](#类函数)
+            * [关于名称](#关于名称)
+    * ["构造函数"](#构造函数)
+
+<!-- tocstop -->
+
 ## [[Prototype]]
 引用对象的属性时会触发[[Get]]操作，对于默认的[[Get]]操作，第一步是检查对象本身是否有这个属性，如果无法在对象本身找到需要的属性，就会继续访问对象的[[Prototype]]链。查找完整条[[Prototype]]链时，[[Get]]操作的返回值是underfined。
 **Object.create( ... )** 会创建一个对象并把这个对象的[[Prototype]]关联到指定的对象。
@@ -51,3 +65,40 @@ myObject.hasOwnProperty("a")  // true
 ```
 ++相当于 myObject.a = myObject.a + 1。因此++会首先通过原型查找属性anotherObject.a获取当前属性值2，然后给这个值加1，接着用[[Put]]将值赋给myObject中新建的屏蔽属性a。
 修改 **委托属性** 时要小心
+
+## "类"
+JavaScript和面向类的语言不同，它并没有类来作为对对象的抽象模式。JavaScript中只有对象，它是可以不通过类直接创建对象的语言，对象直接定义自己的行为。 **JavaScript中只有对象。**
+
+### "类"函数
+函数的一种特殊属性：有一个公有且不可枚举的prototype属性，他会指向另一个对象。
+```js
+function Foo() {
+    // ...
+}
+
+Foo.prototype; // { }
+```
+这个对象成为Foo的原型
+```js
+function Foo() {
+    // ...
+}
+
+var a = new Foo();
+
+Object.getPrototypeOf( a ) === Foo.prototype; // true
+
+```
+a内部的[[Prototype]]链接到Foo.prototype所指向的对象。
+在面向类的语言中，类可以被复制(实例化)多次，实例化(继承)一个类就意味着 **把类的行为复制到物理对象中** ，每一个新的实例都会重复这个过程。
+在JavaScript中，没有类似的复制机制。不能创建一个类的多个实例，只能创建多个对象，它们的[[Prototpye]]。
+实际上我们并没有从"类"中复制任何行为到一个对象中，只是让两个对象互相关联。这个关联是一个以外的副作用。new Foo()间接完成了我们的目标： **一个关联到其他对象的新对象** ，Object.create(...)可以直接做到这一点。
+
+#### 关于名称
+
+- 继承：意味着复制操作，JavaScript(默认)并不会复制对象属性。在传统的基于Class的语言如Java、C++中，继承的本质是扩展一个已有的Class，并生成新的Subclass。
+- 委托：一个对象通过委托访问另一个对象的属性和函数，更准确描述JavaScript中对象的关联机制。
+- 原型继承
+- 差异继承
+
+## "构造函数"
