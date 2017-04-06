@@ -14,7 +14,9 @@ title: 原型
     * ["类"](#类)
         * ["类"函数](#类函数)
             * [关于名称](#关于名称)
-    * ["构造函数"](#构造函数)
+        * ["构造函数"](#构造函数)
+            * [构造函数还是调用](#构造函数还是调用)
+    * [技术](#技术)
 
 <!-- tocstop -->
 
@@ -101,4 +103,34 @@ a内部的[[Prototype]]链接到Foo.prototype所指向的对象。
 - 原型继承
 - 差异继承
 
-## "构造函数"
+### "构造函数"
+面向类的语言中构造实例会用到关键字new
+```js
+functon Foo() {
+    // ...
+}
+
+Foo.prototype.constructor === Foo; // true
+
+var a = new Foo();
+a.constructor === Foo; // true
+```
+Foo.prototype 在函数声明时默认有一个公有并且不可枚举的属性.constructor，这个函数引用的是 **对象关联的函数**　本例是Foo。
+可以看到a调用new Foo() 创建的对象也有一个.constructor属性，指向“创建这个对象的函数”。实际上a本身并没有.constructor属性。
+a.constructor只是通过默认的[[Prototype]]委托指向Foo,这和“构造”毫无关系。
+#### 构造函数还是调用
+Foo和其他函数没有任何区别。函数本身并不是构造函数，在普通函数调用前面加上new关键字之后，就会把这个函数变成一个“构造函数调用”。实际上，new会劫持所有普通函数并用构造对象的形式调用它。
+```js
+function NothingSpecial() {
+    console.log("Don't mind me!")
+}
+
+var a = new NothingSpecial();
+// "Don't mind me!"
+
+a; // {}
+```
+new调用是一个 **构造函数调用**，NothingSpecial本身并不是一个构造函数。
+JavaScript中的“构造函数”：所有带有new的函数调用。
+函数不是构造函数，当且仅当使用new时，函数调用会变成“构造函数调用”。
+## 技术
