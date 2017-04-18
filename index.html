@@ -2,8 +2,9 @@
 layout: default
 title: 江肖的笔记
 ---
-<h2>{{ page.title }}</h2>
-<p>最新笔记</p>
+<img class='avatar' src='./image/avatar.jpg'/>
+<h2 class='title'>{{ page.title }}</h2>
+<p class='title2'>最新笔记</p>
 <ul>
 　　{% for post in site.posts %}
 　　　　<li>{{ post.date | date_to_string }} <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></li>
